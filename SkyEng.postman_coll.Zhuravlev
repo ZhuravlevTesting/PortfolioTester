@@ -1,0 +1,677 @@
+{
+	"info": {
+		"_postman_id": "ea0b9074-a2b3-45da-b9bf-5f52edb8ad79",
+		"name": "SkyEng",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27171999",
+		"_collection_link": "https://interstellar-crescent-184293.postman.co/workspace/Lesson-5~59322c35-e9e6-4131-9224-eedf7987b783/collection/27171999-ea0b9074-a2b3-45da-b9bf-5f52edb8ad79?action=share&creator=27171999&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Получение расписания",
+			"item": [
+				{
+					"name": "Получение расписания",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"from\": \"2023-05-29T00:00:00+03:00\",\r\n    \"till\": \"2023-06-02T00:00:00+03:00\",\r\n    \"onlyTypes\": [\r\n        \"slot\",\r\n        \"event\"\r\n    ],\r\n    \"statuses\": [\r\n        \"without_status\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SkyEngSchedule}}/events",
+							"host": [
+								"{{SkyEngSchedule}}"
+							],
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Создание события с валидными данными",
+			"item": [
+				{
+					"name": "Создание с валидными данными",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var key = \"sobitie\"\r",
+									"var value = pm.response.json().data.payload.id\r",
+									"pm.collectionVariables.set(key, value)\r",
+									"\r",
+									"var key = \"validOldStartAt\"\r",
+									"var value = pm.response.json().data.startAt\r",
+									"pm.collectionVariables.set(key, value)\r",
+									"\r",
+									"var key = \"title\"\r",
+									"var value = pm.response.json().data.payload.payload.title\r",
+									"pm.collectionVariables.set(key, value)\r",
+									"\r",
+									"var key = \"description\"\r",
+									"var value = pm.response.json().data.payload.payload.description\r",
+									"pm.collectionVariables.set(key, value)\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startAt\": \"2023-06-02T12:00:00+03:00\",\r\n    \"endAt\": \"2023-06-02T13:00:00+03:00\",\r\n    \"title\": \"{{$randomJobType}}\",\r\n    \"description\": \"{{$randomJobDescriptor}}\",\r\n    \"color\": \"#81888D\",\r\n    \"backgroundColor\": \"#F4F5F6\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SkyEngSchedule}}/createPersonal",
+							"host": [
+								"{{SkyEngSchedule}}"
+							],
+							"path": [
+								"createPersonal"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Создание события в прошлом году",
+			"item": [
+				{
+					"name": "Создание в прошлом году",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var key = \"lastsobitie\"\r",
+									"var value = pm.response.json().data.payload.id\r",
+									"pm.collectionVariables.set(key, value)\r",
+									"\r",
+									"var key = \"laststartAt\"\r",
+									"var value = pm.response.json().data.startAt\r",
+									"pm.collectionVariables.set(key, value)\r",
+									"\r",
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startAt\": \"2022-05-24T12:00:00+03:00\",\r\n    \"endAt\": \"2022-05-24T13:00:00+03:00\",\r\n    \"title\": \"Лекция\",\r\n    \"description\": \"Посмотреть лекцию\",\r\n    \"color\": \"#81888D\",\r\n    \"backgroundColor\": \"#F4F5F6\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SkyEngSchedule}}/createPersonal",
+							"host": [
+								"{{SkyEngSchedule}}"
+							],
+							"path": [
+								"createPersonal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Удаление события в прошлом",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": {{lastsobitie}},\r\n    \"startAt\": \"{{laststartAt}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SkyEngSchedule}}/removePersonal",
+							"host": [
+								"{{SkyEngSchedule}}"
+							],
+							"path": [
+								"removePersonal"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Создание события с некорректной датой",
+			"item": [
+				{
+					"name": "Создание с некорректной датой",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startAt\": \"2050-13-50T12:00:00+03:00\",\r\n    \"endAt\": \"2050-13-50T13:00:00+03:00\",\r\n    \"title\": \"Лекция\",\r\n    \"description\": \"Посмотреть лекцию\",\r\n    \"color\": \"#81888D\",\r\n    \"backgroundColor\": \"#F4F5F6\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SkyEngSchedule}}/createPersonal",
+							"host": [
+								"{{SkyEngSchedule}}"
+							],
+							"path": [
+								"createPersonal"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Создание события с неустановленной датой",
+			"item": [
+				{
+					"name": "Создание с неустановленной датой",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startAt\": \"null\",\r\n    \"endAt\": \"null\",\r\n    \"title\": \"Лекция\",\r\n    \"description\": \"Посмотреть лекцию\",\r\n    \"color\": \"#81888D\",\r\n    \"backgroundColor\": \"#F4F5F6\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SkyEngSchedule}}/createPersonal",
+							"host": [
+								"{{SkyEngSchedule}}"
+							],
+							"path": [
+								"createPersonal"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Редактирование события с изменением одного параметра",
+			"item": [
+				{
+					"name": "Редактирование времени события",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var key = \"redsobitie\"\r",
+									"var value = pm.response.json().data.payload.id\r",
+									"pm.collectionVariables.set(key, value)\r",
+									"\r",
+									"var key = \"redOldStartAt\"\r",
+									"var value = pm.response.json().data.startAt\r",
+									"pm.collectionVariables.set(key, value)\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startAt\": \"2023-06-02T13:00:00+03:00\",\r\n    \"endAt\": \"2023-06-02T14:00:00+03:00\",\r\n    \"title\": \"{{title}}\",\r\n    \"description\": \"{{description}}\",\r\n    \"color\": \"#D478F1\",\r\n    \"backgroundColor\": \"#EBFDF2\",\r\n    \"id\": {{sobitie}},\r\n    \"oldStartAt\": \"{{validOldStartAt}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SkyEngSchedule}}/updatePersonal",
+							"host": [
+								"{{SkyEngSchedule}}"
+							],
+							"path": [
+								"updatePersonal"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Редактирование события с измененеием всех параметров",
+			"item": [
+				{
+					"name": "Редактирование всех параметров",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var key = \"red2sobitie\"\r",
+									"var value = pm.response.json().data.payload.id\r",
+									"pm.collectionVariables.set(key, value)\r",
+									"\r",
+									"var key = \"red2OldStartAt\"\r",
+									"var value = pm.response.json().data.startAt\r",
+									"pm.collectionVariables.set(key, value)\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startAt\": \"2023-06-02T17:00:00+03:00\",\r\n    \"endAt\": \"2023-06-02T18:00:00+03:00\",\r\n    \"title\": \"Созвон\",\r\n    \"description\": \"Созвониться с студентом 1\",\r\n    \"color\": \"#43B658\",\r\n    \"backgroundColor\": \"#FFF7C7\",\r\n    \"id\": {{redsobitie}},\r\n    \"oldStartAt\": \"{{redOldStartAt}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SkyEngSchedule}}/updatePersonal",
+							"host": [
+								"{{SkyEngSchedule}}"
+							],
+							"path": [
+								"updatePersonal"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Сохранение через редактирование без изменения параметров",
+			"item": [
+				{
+					"name": "Редактирование без изменения параметров",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var key = \"red3sobitie\"\r",
+									"var value = pm.response.json().data.payload.id\r",
+									"pm.collectionVariables.set(key, value)\r",
+									"\r",
+									"var key = \"red3OldStartAt\"\r",
+									"var value = pm.response.json().data.startAt\r",
+									"pm.collectionVariables.set(key, value)\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startAt\": \"2023-06-02T17:00:00+03:00\",\r\n    \"endAt\": \"2023-06-02T18:00:00+03:00\",\r\n    \"title\": \"Созвон\",\r\n    \"description\": \"Созвониться с студентом 1\",\r\n    \"color\": \"#43B658\",\r\n    \"backgroundColor\": \"#FFF7C7\",\r\n    \"id\": {{red2sobitie}},\r\n    \"oldStartAt\": \"{{red2OldStartAt}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SkyEngSchedule}}/updatePersonal",
+							"host": [
+								"{{SkyEngSchedule}}"
+							],
+							"path": [
+								"updatePersonal"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Удаление существующего события",
+			"item": [
+				{
+					"name": "Удаление персонального события",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": {{red3sobitie}},\r\n    \"startAt\": \"{{red3OldStartAt}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SkyEngSchedule}}/removePersonal",
+							"host": [
+								"{{SkyEngSchedule}}"
+							],
+							"path": [
+								"removePersonal"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Удаление уже удаленного события",
+			"item": [
+				{
+					"name": "Удаление удаленного события",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": {{red3sobitie}},\r\n    \"startAt\": \"{{red3OldStartAt}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SkyEngSchedule}}/removePersonal",
+							"host": [
+								"{{SkyEngSchedule}}"
+							],
+							"path": [
+								"removePersonal"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "SkyEngSchedule",
+			"value": "https://api-teachers.skyeng.ru/v2/schedule"
+		},
+		{
+			"key": "token",
+			"value": "token_global=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VySWQiOjE0NTk2OTMzLCJpZGVudGl0eSI6InRlc3QudHN0MzE3QHNreWVuZy5ydSIsImlkZW50aXR5TG9naW4iOm51bGwsImlkZW50aXR5RW1haWwiOiJ0ZXN0LnRzdDMxN0Bza3llbmcucnUiLCJpZGVudGl0eVBob25lIjpudWxsLCJuYW1lIjoidGVzdCIsInN1cm5hbWUiOiJ0ZXN0IiwiZW1haWwiOiJ0ZXN0LnRzdDMxN0Bza3llbmcucnUiLCJ1aUxhbmd1YWdlIjoicnUiLCJsb2NhbGUiOiJydSIsInNlcnZpY2VMb2NhbGUiOm51bGwsInVhcyI6MzAsImp3dFR5cGUiOjEsImp0aSI6IllXSVZFMnNJZ1pReTlxWDhTS1Z6VnAxN05reW9neXFmIiwiYnJhbmQiOm51bGwsImV4cCI6MTY4NDg2NDY0OCwiYXZhdGFyVXJsIjoiaHR0cHM6XC9cL2F1dGgtYXZhdGFycy1za3llbmcuaW1naXgubmV0XC8xNDU5NjkzM1wvOThmNmJlYjUtZjA3Yi00MWViLThiYzItNDU3MTQwYTc0ODgzP2F1dG89Zm9ybWF0JTJDZW5oYW5jZSZmaXQ9Y3JvcCZoPTIwMCZpeGxpYj1waHAtMi4xLjEmcT03NSZzYXQ9OCZzaGFycD0xMCZ2aWI9OCZ3PTIwMCIsImFJc1N0cm9uZyI6dHJ1ZSwiYVR5cGUiOiJVU0VSTkFNRV9QQVNTV09SRCIsImFUaW1lIjoxNjg0Nzc4MjQ3LCJyb2xlcyI6WyJST0xFX1RFQUNIRVJfQ0FORElEQVRFIiwiUk9MRV9URUFDSEVSX0NBTkRJREFURV9CQVNFX0FDQ0VTUyIsIlJPTEVfVFRDX1VTQUdFIiwiUk9MRV9WSU1CT1hfVEVBQ0hFUl9VU0FHRSIsIlJPTEVfVEVBQ0hFUiIsIlJPTEVfQ1JNMl9URUFDSEVSX0FDQ0VTUyIsIlJPTEVfTUFUSF9URUFDSEVSIiwiUk9MRV9NQVRIX0NPTlRFTlRfVEhFTUVfVklFVyJdfQ.eTJB7hZmANDNYR97G2MYsngm5FcyljMRBPVwjlvCIZrgO8M6KTLdE4UuPs3aQyBAxyjZUtwUTpqTDga2_bzO7ciAgzDm0WetbUfmwH02KUbYgN0DC6UspZzQ9j1jGSzSZHt-SIJaEigZGeD7BR2ia6L_TpoxvNlgumjUWpnmPfKb59NoJCmoWKYXYxESBFBRwldHgEzrq736rNgLHj0-sj_2MuRJSqXFf2RVsv3qu5lAH2t37PxTFoE6EG5A2IP8em7nsj0pNSmR97VvwttpMdrW91sgItQrMUARZeO93wnioNAkcqMa55EZzaBEdAE0NzcMYSHGu7wzo9ZN9SmD2DEdn9cAGIcI5B86-VfnZbkCE4tO03pr1-pVu8gxV1iqfAOIOESjeF3UPPR2UhANr2Q2rJsYiN0pp7NBaJ5xRUGYezCtbiHYSqYkl4Cgv8svSuoMKcEO0OtuCrUPee4s1LmSKrvS3RzyNC1539NofbBbThED480iPLZOsTE-rXJ7iI0b19aFGyacOzkZC73PCWjPSiBZyzaXTi-z_Kxj4keleV_pR4kkwWj9S3OKDHgBN3sTDa6Xr1GZ4ehkbUXjXhty6G9tG8sI9Xzu8utnXfUN_34-HdQRtUuUmwkLI7iYIDZvjVfoC-yYUepfVsziuaeb36u95lUYAUOQX0Op8iU",
+			"type": "string"
+		},
+		{
+			"key": "sobitie",
+			"value": ""
+		},
+		{
+			"key": "redsobitie",
+			"value": ""
+		},
+		{
+			"key": "lastsobitie",
+			"value": ""
+		},
+		{
+			"key": "laststartAt",
+			"value": ""
+		},
+		{
+			"key": "validOldStartAt",
+			"value": ""
+		},
+		{
+			"key": "title",
+			"value": ""
+		},
+		{
+			"key": "description",
+			"value": ""
+		},
+		{
+			"key": "redOldStartAt",
+			"value": ""
+		},
+		{
+			"key": "red2sobitie",
+			"value": ""
+		},
+		{
+			"key": "red2OldStartAt",
+			"value": ""
+		},
+		{
+			"key": "red3sobitie",
+			"value": ""
+		},
+		{
+			"key": "red3OldStartAt",
+			"value": ""
+		}
+	]
+}
