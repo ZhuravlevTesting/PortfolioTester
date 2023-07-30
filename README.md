@@ -1,5 +1,5 @@
 <div id="header" align="center">
-<img https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif/>
+  <img src="https://media.giphy.com/media/PmAjqmm4beKervYzFr/giphy.gif" width="300"/>
 </div>
 
 # Порфолио: Junior QA Engineer
