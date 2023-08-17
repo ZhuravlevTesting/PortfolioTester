@@ -45,6 +45,8 @@
 
 <p>Как решал: создал тест-кейсы для Postman коллекции по чек-листу из Проекта 1, изучил документацию API, создал запросы в Postman и сформировал их в тест-кесйсы, создал коллекцию в Postman, дополнил отчет.<p>
 
+<img src="https://github.com/ZhuravlevTesting/PortfolioTester/blob/main/SkyEngPostman.jpg"/>
+
 > <a href="https://qa-bug-report97.atlassian.net/l/cp/BEUgD4fs">Ссылка на проект</a>
 
 ## Контактная информация
