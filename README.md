@@ -28,6 +28,8 @@
 
 <img src="https://github.com/ZhuravlevTesting/PortfolioTester/blob/main/%D0%9A%D1%83%D1%80%D1%81%D0%BE%D0%B2%D0%B0%D1%8F1SmokeTest.jpg"/>
 
+<img src="https://github.com/ZhuravlevTesting/PortfolioTester/blob/main/e3c92b8d-f03a-4010-9a65-b32a8d9691fe.jpg"/>
+
 > <a href="https://qa-bug-report97.atlassian.net/l/cp/gr66JfR1">Ссылка на проект</a>
 
 <p>Выводы (итоги): Проект с новым функционалом “Личные события” готов к выпуску. Он соответствует требованиям, но не удовлетворяет запросы наших стейкхолдеров.<p>
