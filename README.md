@@ -49,6 +49,10 @@
 
 <img src="https://github.com/ZhuravlevTesting/PortfolioTester/blob/main/BugReport1.jpg"/>
 
+<img src="https://github.com/ZhuravlevTesting/PortfolioTester/blob/main/BugReport2.jpg"/>
+
+<img src="https://github.com/ZhuravlevTesting/PortfolioTester/blob/main/RegressTest.jpg"/>
+
 > <a href="https://qa-bug-report97.atlassian.net/l/cp/BEUgD4fs">Ссылка на проект</a>
 
 ## Контактная информация
